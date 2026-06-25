@@ -1,0 +1,7 @@
+* {box-sizing:border-box;}
+html, body, header, main, footer, nav, img, a, div, h1, h2, h3, p, span {
+    margin: 0; padding: 0;
+    font-size: 1.0rem; font-weight: normal; font-style: normal;
+    line-height: 1.0;
+} 
+a {color:#000; text-decoration:none;}
