@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{{ review.title }}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <a href="{% url 'review_list' %}" class="back-link">my Movie reviews</a>
+    <div class="card">
+
+        <h1 class="form-title">영화 리뷰 작성</h1>
+        <p>감독: {{ review.director }}</p>
+        <p>주연: {{ review.main_actor }}</p>
+        <p>장르: {{ review.genre }}</p>
+        <p>별점: {{ review.rating }}</p>
+        <p>러닝타임: {{ review.running_time }}분</p>
+        <p>리뷰 내용: {{ review.content }}</p>
+    </div>
+    <div class="action-row">
+        <a href="{% url 'review_update' pk=review.pk %}" class="btn btn-outline">수정</a>
+        <a href="{% url 'review_delete' pk=review.pk %}" class="btn btn-danger">삭제</a>
+    </div>
+
+</body>
+</html>

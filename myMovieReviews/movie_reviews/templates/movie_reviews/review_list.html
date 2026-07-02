@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>My Movie Reviews</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+<body>
+    <div class="page-header">
+        <h1>My Movie Reviews</h1>
+        <a href="{% url 'review_create' %}" class="btn">리뷰 작성</a>
+    </div>
+    <hr>
+    {% for review in reviews %} <!-- reviews에서 하나씩 꺼내 review에 담아 실행 -->
+        <div class="card review-card">
+            <h2>
+                <a href="{% url 'review_detail' pk=review.pk %}">{{ review.title }}</a>
+            </h2>            <p>장르: {{ review.genre }}</p>
+            <p>별점: {{ review.rating }}</p>
+        </div>
+        <hr>
+    {% endfor %}
+</body>
+</html>
