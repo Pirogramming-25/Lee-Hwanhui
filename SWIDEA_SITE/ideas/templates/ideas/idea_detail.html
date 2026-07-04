@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ idea.title }}</h2>
+
+{% if idea.image %}
+<img src="{{ idea.image.url }}" style="max-width:300px;">
+
+{% endif %}
+
+<p>{{ idea.content }}</p>
+
+
+<p>
+    관심도: {{ idea.interest }}
+    <a href="{% url 'ideas:idea_interest_update' pk=idea.pk %}?action=increase" class="btn btn-sm btn-outline-primary">+</a>
+    
+    <a href="{% url 'ideas:idea_interest_update' pk=idea.pk %}?action=decrease" class="btn btn-sm btn-outline-secondary">-</a>
+    
+</p>
+
+<p>
+    개발툴:
+    <a href="{% url 'ideas:devtool_detail' pk=idea.devtool.pk %}">{{ idea.devtool.name }}</a>
+    
+</p>
+
+<p>
+    {% if is_starred %}
+    <a href="{% url 'ideas:idea_star_toggle' pk=idea.pk %}?next=detail" class="btn btn-sm btn-warning">⭐ 찜 취소</a>
+    
+    {% else %}
+    <a href="{% url 'ideas:idea_star_toggle' pk=idea.pk %}" class="btn btn-sm btn-outline-warning">☆ 찜하기</a>
+    
+    {% endif %}
+</p>
+
+
+<a href="{% url 'ideas:idea_update' pk=idea.pk %}" class="btn btn-warning">수정</a>
+
+
+<form method="post" action="{% url 'ideas:idea_delete' pk=idea.pk %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">삭제</button>
+    
+</form>
+
+<a href="{% url 'ideas:idea_list' %}" class="btn btn-secondary">목록</a>
+
+{% endblock %}

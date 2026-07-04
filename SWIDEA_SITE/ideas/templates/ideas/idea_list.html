@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h2>아이디어 목록</h2>
+<div class="mb-3">
+    
+    <a href="?sort=latest" class="btn btn-sm btn-outline-dark">최신순</a>
+    <a href="?sort=oldest" class="btn btn-sm btn-outline-dark">등록순</a>
+    <a href="?sort=name" class="btn btn-sm btn-outline-dark">이름순</a>
+    <a href="?sort=star" class="btn btn-sm btn-outline-dark">찜하기순</a>
+</div>
+
+<a href="{% url 'ideas:idea_create' %}" class="btn btn-primary mb-3">+ 아이디어 등록</a>
+
+
+<div class="row">
+    {% for idea in ideas %}
+    <div class="col-md-3 mb-3">
+        <div class="card" style="position: relative;">
+
+            {% if idea.image %}
+            <img src="{{ idea.image.url }}" class="card-img-top" style="height:150px; object-fit:cover;">
+            {% endif %}
+
+            
+            <a href="{% url 'ideas:idea_star_toggle' pk=idea.pk %}?next=list"
+                style="position: absolute; top: 8px; right: 8px; font-size: 22px; text-decoration: none;">
+                {% if idea.pk in starred_ids %}
+                    ★
+                {% else %}
+                    ☆
+                {% endif %}
+            </a>
+
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'ideas:idea_detail' pk=idea.pk %}">{{ idea.title }}</a>
+                </h5>
+                <p class="card-text">관심도: {{ idea.interest }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>등록된 아이디어가 없습니다.</p>
+    {% endfor %}
+</div>
+{% endblock %}

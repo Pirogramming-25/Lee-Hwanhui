@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ devtool.name }}</h2>
+<p>종류: {{ devtool.kind }}</p>
+<p>{{ devtool.content }}</p>
+
+<h4>이 개발툴을 사용하는 아이디어</h4>
+<ul class="list-group mb-3">
+    {% for idea in ideas %}
+    
+    <li class="list-group-item">
+        <a href="{% url 'ideas:idea_detail' pk=idea.pk %}">{{ idea.title }}</a>
+        
+    </li>
+    {% empty %}
+    <p>이 개발툴을 사용하는 아이디어가 없습니다.</p>
+    {% endfor %}
+</ul>
+
+
+<a href="{% url 'ideas:devtool_update' pk=devtool.pk %}" class="btn btn-warning">수정</a>
+
+<form method="post" action="{% url 'ideas:devtool_delete' pk=devtool.pk %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">삭제</button>
+</form>
+
+<a href="{% url 'ideas:devtool_list' %}" class="btn btn-secondary">목록</a>
+{% endblock %}
