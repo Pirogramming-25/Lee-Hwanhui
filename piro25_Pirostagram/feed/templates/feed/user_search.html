@@ -1,0 +1,36 @@
+{% extends 'feed/base.html' %}
+{% block content %}
+
+<h2 class="search-result-title">유저 검색 결과</h2>
+
+<form method="get" style="margin-bottom:20px;">
+    <input type="text" name="q" value="{{ query }}">
+    <button type="submit">검색</button>
+</form>
+
+{% for u in results %}
+    <div class="user-card">
+        <div class="user-card-left">
+        <div class="user-avatar">
+            {% if u.profile.profile_image %}
+            <img src="{{ u.profile.profile_image.url }}" class="user-avatar-img">
+            {% endif %}
+        </div>
+        <span class="user-id">{{ u.username }}</span>
+        </div>
+
+        <div class="user-actions">
+        <a href="{% url 'feed:profile_view' username=u.username %}" class="user-btn">프로필 보기</a>
+        <form action="{% url 'feed:follow_toggle' username=u.username %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="user-btn {% if u.is_following %}following{% endif %}">팔로우</button>
+        </form>
+        </div>
+    </div>
+{% empty %}
+    {% if query %}
+        <p>검색 결과가 없습니다.</p>
+    {% endif %}
+{% endfor %}
+
+{% endblock %}

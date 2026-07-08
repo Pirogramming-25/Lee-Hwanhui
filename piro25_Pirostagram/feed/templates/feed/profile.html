@@ -1,0 +1,45 @@
+{% extends 'feed/base.html' %}
+{% block content %}
+
+<div class="profile-card">
+    <div class="profile-avatar-ring">
+        <div class="profile-avatar">
+        {% if profile_user.profile.profile_image %}
+            <img src="{{ profile_user.profile.profile_image.url }}">
+        {% endif %}
+        </div>
+    </div>
+
+    <div class="profile-info">
+        <div class="profile-top-row">
+        <span class="profile-username">{{ profile_user.username }}</span>
+
+        {% if is_own_profile %}
+            <span class="profile-btn active">프로필 수정하기</span>
+        {% else %}
+            <form action="{% url 'feed:follow_toggle' username=profile_user.username %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="profile-btn {% if is_following %}active{% endif %}">팔로우</button>
+            </form>
+        {% endif %}
+        </div>
+
+        <div class="profile-stats">
+        <span>게시물 <strong>{{ post_count }}</strong></span>
+        <span>팔로워 <strong>{{ follower_count }}</strong></span>
+        <span>팔로우 <strong>{{ following_count }}</strong></span>
+        </div>
+
+        <p class="profile-bio">
+        {% if profile_user.profile.bio %}{{ profile_user.profile.bio }}{% else %}소개글이 없습니다.{% endif %}
+        </p>
+    </div>
+</div>
+
+<div class="profile-grid">
+    {% for post in posts %}
+        <img src="{{ post.image.url }}">
+    {% endfor %}
+</div>
+
+{% endblock %}
