@@ -1,0 +1,25 @@
+{% extends 'feed/base.html' %}
+{% block content %}
+
+<div class="form-card">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-header">
+        <h2>{% if form.instance.pk %}게시글 수정{% else %}게시글 만들기{% endif %}</h2>
+        <button type="submit" class="form-submit-btn">{% if form.instance.pk %}수정하기{% else %}만들기{% endif %}</button>
+        </div>
+
+        <label class="form-label">사진 업로드</label>
+        <div class="form-upload-box">
+        {{ form.image }}
+        </div>
+
+        <label class="form-label">내용</label>
+        <div class="form-textarea-box">
+        {{ form.content }}
+        </div>
+    </form>
+</div>
+
+{% endblock %}

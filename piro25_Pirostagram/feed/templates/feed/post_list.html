@@ -1,0 +1,70 @@
+{% extends 'feed/base.html' %}
+{% block content %}
+
+<div class="story-bar">
+    <a href="{% url 'feed:story_create' %}" class="story-circle">
+        <span class="plus-icon">+</span>
+    </a>
+    {% for author in story_authors %}
+        {% with story=author.stories.last %}
+        <a href="{% url 'feed:story_view' pk=story.pk %}" class="story-circle">
+            {% if author.profile.profile_image %}
+            <img src="{{ author.profile.profile_image.url }}" class="story-img">
+            {% endif %}
+        </a>
+        {% endwith %}
+    {% endfor %}
+</div>
+
+<h2>게시물</h2>
+
+{% for post in posts %}
+    <div class="post-card">
+        <div class="post-header">
+        <a href="{% url 'feed:profile_view' username=post.author.username %}" class="username">{{ post.author.username }}</a>
+
+        <form action="{% url 'feed:like_toggle' pk=post.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="like-btn {% if post.user_has_liked %}liked{% endif %}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
+            </button>
+        </form>
+        </div>
+
+        <p>좋아요 {{ post.like_count }}개</p>
+
+        <div class="post-image">
+        <img src="{{ post.image.url }}">
+        </div>
+
+        <p class="post-content">{{ post.content }}</p>
+
+        {% if post.author == user %}
+        <a href="{% url 'feed:post_update' pk=post.pk %}">수정</a>
+        <a href="{% url 'feed:post_delete' pk=post.pk %}">삭제</a>
+        {% endif %}
+
+        {% for comment in post.comments.all %}
+        <div class="comment-card">
+            <p class="comment-username">{{ comment.author.username }}</p>
+            <p class="comment-content">
+            {{ comment.content }}
+            {% if comment.author == user %}
+                <a href="{% url 'feed:comment_update' pk=comment.pk %}">수정</a>
+                <a href="{% url 'feed:comment_delete' pk=comment.pk %}">삭제</a>
+            {% endif %}
+            </p>
+        </div>
+        {% endfor %}
+
+        <form action="{% url 'feed:comment_create' pk=post.pk %}" method="post" class="comment-input-row">
+        {% csrf_token %}
+        <input type="text" name="content" class="comment-input" placeholder="댓글을 입력하세요...">
+        <button type="submit" class="comment-submit">등록</button>
+        </form>
+    </div>
+{% empty %}
+    <p>표시할 게시글이 없습니다. 다른 유저를 팔로우해보세요!</p>
+{% endfor %}
+
+{% endblock %}
