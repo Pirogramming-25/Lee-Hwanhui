@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings         
 from django.conf.urls.static import static 
+from ideas import views as ideas_views
 
 urlpatterns = [
+    path('', ideas_views.idea_list, name='home'),
     path('admin/', admin.site.urls),   
     path('ideas/', include('ideas.urls')),   
 ]
