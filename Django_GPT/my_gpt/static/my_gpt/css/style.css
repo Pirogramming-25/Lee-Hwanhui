@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;700;900&display=swap');
+
+:root {
+    --paper: #EFE6D3;
+    --paper-light: #F8F2E4;
+    --ink: #362619;
+    --ink-soft: #7C6A55;
+    --leather: #5C3A26;
+    --leather-dark: #402715;
+    --accent: #A15C34;
+    --rule: #CBB994;
+    --error: #8B3A3A;
+    --error-bg: #E9D4C6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background-color: var(--paper);
+    background-image: radial-gradient(rgba(92, 58, 38, 0.03) 1px, transparent 1px);
+    background-size: 3px 3px;
+    color: var(--ink);
+    line-height: 1.6;
+}
+
+a {
+    color: var(--accent);
+}
+
+/* 헤더 */
+
+header {
+    background: var(--leather);
+    padding: 20px 28px 0;
+    display: flex;
+    align-items: flex-end;
+    gap: 28px;
+    flex-wrap: wrap;
+    border-bottom: 6px solid var(--leather-dark);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.site-title {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    font-size: 22px;
+    color: var(--paper-light);
+    letter-spacing: 0.06em;
+    padding-bottom: 14px;
+}
+
+.tab-bar {
+    display: flex;
+    gap: 6px;
+    flex: 1;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--paper);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 10px 16px;
+    border-radius: 6px 6px 0 0;
+    font-size: 14px;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.nav-link.active {
+    font-weight: 700;
+    border-bottom: 3px solid var(--accent);
+    background: var(--paper-light);
+    color: var(--leather-dark);
+    transform: translateY(2px);
+}
+
+.auth-status {
+    font-size: 13px;
+    color: var(--paper);
+    opacity: 0.85;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 14px;
+    margin-left: auto;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: var(--paper-light);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0;
+}
+
+/* 본문 */
+
+.page-content {
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.feature-page {
+    background: var(--paper-light);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 32px 36px;
+    box-shadow: 0 2px 10px rgba(92, 58, 38, 0.08);
+}
+
+.feature-page h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    font-size: 26px;
+    color: var(--leather-dark);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--rule);
+}
+
+.model-info {
+    font-size: 13px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 14px;
+}
+
+.model-info dt {
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 2px 8px;
+    height: fit-content;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+}
+
+.model-info dd {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--ink);
+    align-self: center;
+    font-size: 13px;
+}
+
+.run-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.run-form textarea {
+    padding: 14px 16px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background:
+        repeating-linear-gradient(
+        var(--paper-light),
+        var(--paper-light) 27px,
+        var(--rule) 28px
+        );
+    background-attachment: local;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    line-height: 28px;
+    color: var(--ink);
+    resize: vertical;
+}
+
+.run-form textarea::placeholder {
+    color: var(--ink-soft);
+    font-style: italic;
+}
+
+.run-form textarea:focus-visible,
+.login-wrap input:focus-visible,
+.run-form button:focus-visible,
+.nav-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.run-form button {
+    align-self: flex-start;
+    padding: 11px 24px;
+    background: var(--leather);
+    color: var(--paper-light);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    box-shadow: 0 2px 0 var(--leather-dark);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.run-form button:hover:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 var(--leather-dark);
+}
+
+.run-form button:disabled,
+.run-form textarea:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.loading-text {
+    color: var(--ink-soft);
+    font-size: 13px;
+    font-style: italic;
+    margin-bottom: 12px;
+}
+
+.error-box {
+    background: var(--error-bg);
+    color: var(--error);
+    border: 1px solid var(--error);
+    padding: 12px 14px;
+    border-radius: 4px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    white-space: pre-wrap;
+}
+
+.result-box {
+    background: var(--paper);
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 28px;
+    font-size: 14px;
+}
+
+.result-box strong {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--leather-dark);
+}
+
+.result-text-label {
+    margin-top: 12px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+}
+
+.result-text {
+    white-space: pre-wrap;
+    line-height: 1.7;
+    margin-top: 4px;
+}
+
+.history-box h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.history-box ul {
+    list-style: none;
+    counter-reset: entry;
+}
+
+.history-box li {
+    counter-increment: entry;
+    position: relative;
+    padding: 10px 0 10px 42px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink);
+}
+
+.history-box li::before {
+    content: "\00A7" counter(entry, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 12px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
+
+/* 로그인 */
+
+.login-wrap {
+    max-width: 360px;
+    margin: 70px auto;
+    background: var(--paper-light);
+    padding: 32px;
+    border-radius: 4px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 2px 10px rgba(92, 58, 38, 0.08);
+}
+
+.login-wrap h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    color: var(--leather-dark);
+    font-size: 22px;
+}
+
+.login-wrap form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.login-wrap label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-weight: 700;
+}
+
+.login-wrap input {
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--paper);
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.login-wrap button {
+    padding: 11px;
+    background: var(--leather);
+    color: var(--paper-light);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+.error-text {
+    color: var(--error);
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+
+@media (max-width: 640px) {
+    header {
+        padding: 16px 16px 0;
+    }
+    .site-title {
+        font-size: 18px;
+    }
+    .feature-page {
+        padding: 22px 20px;
+    }
+    .model-info {
+        grid-template-columns: 1fr;
+    }
+}
