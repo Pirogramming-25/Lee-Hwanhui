@@ -1,0 +1,50 @@
+{% extends "my_gpt/base.html" %}
+{% load static %}
+
+{% block title %}문서 요약 - Django GPT{% endblock %}
+
+{% block content %}
+<section class="feature-page">
+    <h2>📄 문서 요약</h2>
+
+    <dl class="model-info">
+        <dt>사용 모델</dt>
+        <dd>sshleifer/distilbart-cnn-6-6</dd>
+        <dt>입력 언어</dt>
+        <dd>영어</dd>
+    </dl>
+
+    <form id="summarize-form" class="run-form">
+        <label for="summarize-input" class="sr-only">요약할 문서</label>
+        <textarea
+        id="summarize-input"
+        maxlength="5000"
+        rows="8"
+        placeholder="영어 문서를 입력하세요 (100~5000자)"></textarea>
+
+        <button type="submit" id="summarize-run-btn">요약 실행</button>
+    </form>
+
+    <p id="summarize-loading" class="loading-text" hidden>처리 중...</p>
+
+    <div id="summarize-error" class="error-box" hidden></div>
+
+    <div id="summarize-result" class="result-box" hidden>
+        <p>원문 길이: <strong id="summarize-original-length"></strong>자</p>
+        <p>요약문 길이: <strong id="summarize-summary-length"></strong>자</p>
+        <p>요약 비율: <strong id="summarize-ratio"></strong>%</p>
+        <p class="result-text-label">요약 결과:</p>
+        <p id="summarize-result-text" class="result-text"></p>
+    </div>
+
+    <div class="history-box">
+        <h3>최근 실행 기록</h3>
+        <ul id="summarize-history-list"></ul>
+    </div>
+    </section>
+
+{{ recent_histories|json_script:"summarize-initial-history" }}
+
+<script src="{% static 'my_gpt/js/common.js' %}"></script>
+<script src="{% static 'my_gpt/js/summarize.js' %}"></script>
+{% endblock %}

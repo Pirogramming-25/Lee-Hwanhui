@@ -1,0 +1,47 @@
+{% extends "my_gpt/base.html" %}
+{% load static %}
+
+{% block title %}감정 분석 - Django GPT{% endblock %}
+
+{% block content %}
+<section class="feature-page">
+    <h2>😊 감정 분석</h2>
+
+    <dl class="model-info">
+        <dt>사용 모델</dt>
+        <dd>cardiffnlp/twitter-roberta-base-sentiment-latest</dd>
+        <dt>입력 언어</dt>
+        <dd>영어</dd>
+    </dl>
+
+    <form id="sentiment-form" class="run-form">
+        <label for="sentiment-input" class="sr-only">분석할 문장</label>
+        <textarea
+        id="sentiment-input"
+        maxlength="1000"
+        rows="4"
+        placeholder="영어 문장을 입력하세요 (1~1000자)"></textarea>
+
+        <button type="submit" id="sentiment-run-btn">감정 분석 실행</button>
+    </form>
+
+    <p id="sentiment-loading" class="loading-text" hidden>처리 중...</p>
+
+    <div id="sentiment-error" class="error-box" hidden></div>
+
+    <div id="sentiment-result" class="result-box" hidden>
+        <p>감정: <strong id="sentiment-result-label"></strong></p>
+        <p>신뢰도: <strong id="sentiment-result-score"></strong></p>
+    </div>
+
+    <div class="history-box">
+        <h3>최근 실행 기록</h3>
+        <ul id="sentiment-history-list"></ul>
+    </div>
+</section>
+
+{{ recent_histories|json_script:"sentiment-initial-history" }}
+
+<script src="{% static 'my_gpt/js/common.js' %}"></script>
+<script src="{% static 'my_gpt/js/sentiment.js' %}"></script>
+{% endblock %}
