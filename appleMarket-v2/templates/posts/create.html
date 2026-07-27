@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>post_create</title>
+<style>
+    main {
+        height: 100vh;
+    }
+    #ocr-status {
+        display: none;
+        color: #888;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p id="ocr-status">🔍 분석 중…</p>
+    <button class="btn btn-success">등록하기</button>
+</form>
+
+<script>
+const imageInput = document.getElementById('id_nutrition_image');
+const status = document.getElementById('ocr-status');
+
+imageInput.addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file) return;             
+
+    status.style.display = 'block'; 
+
+    const formData = new FormData();
+    formData.append('image', file); 
+    fetch("{% url 'posts:analyze_nutrition' %}", {
+        method: 'POST',
+        body: formData,
+    })
+    .then(res => res.json())        
+    .then(data => {
+        if (data.calories !== null) document.getElementById('id_calories').value = data.calories;
+        if (data.carbs    !== null) document.getElementById('id_carbs').value    = data.carbs;
+        if (data.protein  !== null) document.getElementById('id_protein').value  = data.protein;
+        if (data.fat      !== null) document.getElementById('id_fat').value      = data.fat;
+        status.style.display = 'none';   
+    })
+    .catch(err => {
+        console.error(err);              
+        status.textContent = '분석 실패';  
+    });
+});
+</script>
+{% endblock %}
